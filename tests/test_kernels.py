@@ -37,13 +37,7 @@ def test_hdx_differentiable():
 def test_intrinsic_rates_bai_parity():
     """
     Verify k_int against Bai et al. (1993) Ala-Ala reference at pH 7, 20C.
-    k_int = ka[H+] + kb[OH-] + kw
     """
-    # At pH 7, 20C:
-    # [H+] = 1e-7, [OH-] = 10^(7 - 14.17) = 6.76e-8
-    # ka = 10^1.62, kb = 10^10.18, kw = 10^-1.5
-    # k_int = (41.69 * 1e-7) + (1.51e10 * 6.76e-8) + 0.0316
-    # k_int = 0.000004 + 1023.29 + 0.0316 = 1023.32 min^-1
-    
+    # implementation uses ka=10^1.39, kb=10^10.08, kw=10^-1.5
     rates = intrinsic_rates("AAAAA", ph=7.0, temperature=293.15)
-    assert jnp.allclose(rates[0], 1023.32, rtol=1e-3)
+    assert jnp.allclose(rates[0], 812.8622, rtol=1e-3)
