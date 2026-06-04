@@ -62,5 +62,5 @@ warn_unused_configs = true
 disallow_untyped_defs = true
 
 [[tool.mypy.overrides]]
-module = ["jax.*", "jaxlib.*", "numpy.*", "biotite.*"]
+module = ["jax.*", "jaxlib.*", "numpy.*"]
 ignore_missing_imports = true

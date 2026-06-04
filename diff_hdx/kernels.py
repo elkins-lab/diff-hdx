@@ -52,13 +52,13 @@ def intrinsic_rates(
     # [H+] and [OH-]
     h_plus = 10**-ph
     # pKw at 20C is ~14.17
-    oh_minus = 10**(ph - 14.17)
+    oh_minus = 10 ** (ph - 14.17)
 
     # Activation energies (kcal/mol)
     e_a, e_b, e_w = 14.0, 17.0, 19.0
     r_gas = 1.987e-3  # kcal/(mol*K)
 
-    def temp_corr(k_ref, e_act):
+    def temp_corr(k_ref: float, e_act: float) -> jnp.ndarray:
         return k_ref * jnp.exp(-e_act / r_gas * (1.0 / temperature - 1.0 / 293.15))
 
     ka_ref_t = temp_corr(k_a_ref, e_a)

@@ -1,6 +1,7 @@
 import jax
 import jax.numpy as jnp
-from diff_hdx.kernels import sasa_approx, protection_factors, h_bond_energy, intrinsic_rates
+
+from diff_hdx.kernels import h_bond_energy, intrinsic_rates, protection_factors, sasa_approx
 
 
 def test_hdx_basic():
@@ -28,7 +29,7 @@ def test_hdx_differentiable():
 
     def loss(x):
         return jnp.sum(protection_factors(x, h_bonds))
-    
+
     grads = jax.grad(loss)(coords)
     assert grads.shape == coords.shape
     assert not jnp.any(jnp.isnan(grads))
