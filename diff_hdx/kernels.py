@@ -2,6 +2,54 @@ import jax
 import jax.numpy as jnp
 
 
+def intrinsic_rates(
+    sequence: str,
+    ph: float = 7.0,
+    temperature: float = 293.15,
+) -> jnp.ndarray:
+    """
+    Compute intrinsic exchange rates (k_int) using the Bai et al. (1993) model.
+    Note: Simplified implementation for core residues.
+
+    Args:
+        sequence: Protein sequence string.
+        ph: pH value.
+        temperature: Temperature in Kelvin.
+
+    Returns:
+        k_int (N,) rates in min^-1.
+    """
+    # Reference rates for Ala-Ala at 20C (293.15K)
+    k_a_ref = 10**1.62
+    k_b_ref = 10**10.18
+    k_w_ref = 10**-1.50
+    
+    # [H+] and [OH-]
+    h_plus = 10**-ph
+    # pKw at 20C is ~14.17
+    oh_minus = 10**(ph - 14.17)
+    
+    # Activation energies (kcal/mol)
+    e_a = 14.0
+    e_b = 17.0
+    e_w = 19.0
+    r_gas = 1.987e-3  # kcal/(mol*K)
+    
+    def temp_corr(k_ref, e_act):
+        return k_ref * jnp.exp(-e_act / r_gas * (1.0 / temperature - 1.0 / 293.15))
+    
+    ka = temp_corr(k_a_ref, e_a)
+    kb = temp_corr(k_b_ref, e_b)
+    kw = temp_corr(k_w_ref, e_w)
+    
+    # Final rate for Ala (simplified as constant for now)
+    k_int_ala = ka * h_plus + kb * oh_minus + kw
+    
+    # Return array of rates (simplified to constant for the whole sequence)
+    # In a full implementation, we would apply side-chain corrections here.
+    return jnp.full(len(sequence), k_int_ala)
+
+
 def sasa_approx(
     coords: jnp.ndarray,
     probe_radius: float = 1.4,
