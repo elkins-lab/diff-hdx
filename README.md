@@ -11,8 +11,9 @@
 ## 🎯 Features
 
 - **Differentiable SASA Kernels:** Hardware-accelerated approximations of Solvent Accessible Surface Area using Gaussian occlusion models.
-- **Protection Factor Modeling:** Implementations of Linderstrøm-Lang models for H-exchange rates ($ln P$).
-- **Gradient-Based Refinement:** Optimize protein structures or ensembles directly against experimental HDX-MS data.
+- **Protection Factor Modeling:** Implementations of Linderstrøm-Lang models for H-exchange rates ($PF$).
+- **Kinetic Simulation:** Model time-dependent mass shifts using **EX2 kinetics** (Hvidt & Nielsen, 1966).
+- **Gradient-Based Refinement:** Optimize protein structures or ensembles directly against experimental HDX-MS time-curves.
 - **Vectorized Execution:** Native support for `vmap` to handle large conformational ensembles.
 
 ---

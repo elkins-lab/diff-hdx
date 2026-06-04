@@ -154,7 +154,8 @@ def protection_factors(
     beta: float = 1.0,
 ) -> jnp.ndarray:
     """
-    Compute HDX protection factors (ln P).
+    Compute HDX protection factors (PF).
+    PF = k_int / k_obs
 
     Args:
         coords: (N, 3) coordinates.
@@ -162,9 +163,31 @@ def protection_factors(
         beta: Scaling factor.
 
     Returns:
-        ln P (N,) protection factors.
+        PF (N,) protection factors.
     """
     sasa = sasa_approx(coords)
-    # ln P ~ (1 - SASA) + H-bonds
-    ln_p = beta * ((1.0 - sasa) + h_bond_energies)
-    return ln_p
+    # ln PF ~ (1 - SASA) + H-bonds
+    ln_pf = beta * ((1.0 - sasa) + h_bond_energies)
+    return jnp.exp(ln_pf)
+
+
+def deuterium_uptake(
+    pf: jnp.ndarray,
+    k_int: jnp.ndarray,
+    time: float,
+) -> jnp.ndarray:
+    """
+    Compute time-dependent deuterium uptake using EX2 kinetics.
+    D(t) = 1 - exp(-k_obs * t)
+    where k_obs = k_int / PF (Hvidt & Nielsen, 1966).
+
+    Args:
+        pf: (N,) protection factors.
+        k_int: (N,) intrinsic exchange rates.
+        time: Exposure time in minutes.
+
+    Returns:
+        D(t) (N,) fractional deuterium uptake.
+    """
+    k_obs = k_int / pf
+    return 1.0 - jnp.exp(-k_obs * time)
