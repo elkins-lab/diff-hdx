@@ -1,0 +1,41 @@
+site_name: diff-hdx
+site_url: https://elkins.github.io/diff-hdx/
+site_description: Differentiable HDX-MS prediction in JAX
+site_author: George Elkins
+
+theme:
+  name: material
+  palette:
+    scheme: slate
+    primary: indigo
+    accent: blue
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - content.code.copy
+
+nav:
+  - Home: index.md
+  - Theory: theory.md
+  - API Reference: api/kernels.md
+
+markdown_extensions:
+  - pymdownx.arithmatex:
+      generic: true
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          setup_commands:
+            - import sys
+            - sys.path.append(".")
+
+extra_javascript:
+  - https://polyfill.io/v3/polyfill.min.js?features=es6
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js

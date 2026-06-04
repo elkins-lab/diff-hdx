@@ -1,0 +1,66 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "diff-hdx"
+version = "0.1.0"
+description = "Differentiable HDX-MS prediction in JAX"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [{name = "George Elkins"}]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Bio-Informatics",
+    "Topic :: Scientific/Engineering :: Physics",
+]
+dependencies = [
+    "jax",
+    "jaxlib",
+    "numpy",
+    "biotite",
+]
+
+[project.urls]
+Homepage = "https://github.com/elkins/diff-hdx"
+Repository = "https://github.com/elkins/diff-hdx"
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "ruff>=0.6.0",
+    "mypy>=1.8.0",
+]
+
+[tool.setuptools.packages.find]
+include = ["diff_hdx*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "UP", "B"]
+ignore = ["E501", "N806", "N803", "N802"]
+
+[tool.mypy]
+python_version = "3.10"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+
+[[tool.mypy.overrides]]
+module = ["jax.*", "jaxlib.*", "numpy.*", "biotite.*"]
+ignore_missing_imports = true
