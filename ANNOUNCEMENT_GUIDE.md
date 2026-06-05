@@ -1,6 +1,6 @@
 # Announcement Guide: diff-biophys
 
-This document outlines the strategy and drafted verbiage for announcing **DiffBiophys** on Twitter (X) and Reddit. 
+This document outlines the strategy and drafted verbiage for announcing **DiffBiophys** on Twitter (X) and Reddit.
 
 Because `diff-biophys` is a highly technical, JAX-based library targeting researchers, the messaging focuses on **differentiability, gradient descent optimization, and physics-informed AI**.
 
@@ -16,11 +16,11 @@ Because `diff-biophys` is a highly technical, JAX-based library targeting resear
 
 **Draft Tweet:**
 > AlphaFold gives us static structures, but biology happens in solution. 🧬
-> 
-> Introducing DiffBiophys: A hardware-accelerated, differentiable biophysics engine built in JAX. 
-> 
+>
+> Introducing DiffBiophys: A hardware-accelerated, differentiable biophysics engine built in JAX.
+>
 > Optimize protein models directly against experimental SAXS and NMR data using gradient descent. 📉
-> 
+>
 > Repo: [Link]
 > Docs: [Link]
 > #AI4Science #StructuralBiology #JAX #MachineLearning
@@ -28,9 +28,9 @@ Because `diff-biophys` is a highly technical, JAX-based library targeting resear
 ### Option 2: The "Physics-Informed" AI Hook
 **Draft Tweet:**
 > Training a protein representation model? Stop relying purely on sequence data.
-> 
+>
 > DiffBiophys provides differentiable SAXS and NMR kernels in JAX, allowing you to use real-world solution-state physics as a loss function during model training. 🧠⚡
-> 
+>
 > Check it out here: [Link]
 > #DeepLearning #JAX #Bioinformatics #CompBio
 
@@ -75,7 +75,7 @@ Would love to hear thoughts from anyone working at the intersection of AI and st
 **Post Content:**
 Hi everyone,
 
-I've been working on **DiffBiophys**, a new tool designed to bridge the gap between static structural models and experimental solution-state data. 
+I've been working on **DiffBiophys**, a new tool designed to bridge the gap between static structural models and experimental solution-state data.
 
 If you've ever wanted to subtly refine a predicted structure (or an ensemble) to better fit a SAXS curve or NMR data, DiffBiophys allows you to do this directly using gradient descent.
 
@@ -103,9 +103,9 @@ Hey r/JAX,
 
 I wanted to share a domain-specific application of JAX I've been working on: **DiffBiophys**.
 
-It implements core structural biology calculations (like the Debye formula for X-ray scattering and spatial coordinate transforms like NeRF) as auto-differentiable, `jit`-compilable kernels. 
+It implements core structural biology calculations (like the Debye formula for X-ray scattering and spatial coordinate transforms like NeRF) as auto-differentiable, `jit`-compilable kernels.
 
-This allows researchers to optimize 3D protein structures against experimental data using gradient-based optimizers (like Optax) instead of relying on stochastic sampling or rigid-body fitting. 
+This allows researchers to optimize 3D protein structures against experimental data using gradient-based optimizers (like Optax) instead of relying on stochastic sampling or rigid-body fitting.
 
 It was a great experience translating traditional $O(N^2)$ biophysics algorithms into vectorized JAX primitives. If you're interested in AI for Science or just want to see some applied JAX code, check out the repo!
 
