@@ -1,5 +1,6 @@
 import jax
 import jax.numpy as jnp
+from jax import Array
 
 # ---------------------------------------------------------------------------
 # Bai et al. (1993) intrinsic-rate correction table.
@@ -42,7 +43,7 @@ def intrinsic_rates(
     sequence: str,
     ph: float = 7.0,
     temperature: float = 293.15,
-) -> jnp.ndarray:
+) -> Array:
     """
     Compute intrinsic exchange rates (k_int) using the Bai et al. (1993) model.
     Includes full side-chain correction factors for all 20 standard amino acids.
@@ -103,7 +104,7 @@ def intrinsic_rates(
     kb = kb_ref_t * 10.0 ** (left_corr[:, 2] + right_corr[:, 3])  # bl + br
     kw = kw_ref_t * 10.0 ** (left_corr[:, 2] + right_corr[:, 3])  # same as kb
 
-    return ka * h_plus + kb * oh_minus + kw  # type: ignore[no-any-return]
+    return jnp.asarray(ka * h_plus + kb * oh_minus + kw)  # explicit Array, satisfies mypy
 
 
 def sasa_approx(
