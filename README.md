@@ -30,7 +30,7 @@
 
 - [x] Initial differentiable SASA and $ln P$ kernels.
 - [x] Integration with JAX `vmap` for ensemble averaging.
-- [ ] Support for residue-specific intrinsic exchange rates (Bai et al. 1993).
+- [x] Residue-specific intrinsic exchange rates (Bai et al. 1993) — all 20 amino acids.
 - [ ] Integration with MD trajectory loaders.
 
 ---

@@ -1,3 +1,15 @@
-from .kernels import protection_factors, sasa_approx
+from .kernels import (
+    deuterium_uptake,
+    h_bond_energy,
+    intrinsic_rates,
+    protection_factors,
+    sasa_approx,
+)
 
-__all__ = ["protection_factors", "sasa_approx"]
+__all__ = [
+    "deuterium_uptake",
+    "h_bond_energy",
+    "intrinsic_rates",
+    "protection_factors",
+    "sasa_approx",
+]

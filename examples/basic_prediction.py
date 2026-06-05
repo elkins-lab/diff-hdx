@@ -1,7 +1,7 @@
 import jax
 import jax.numpy as jnp
 
-from diff_hdx.kernels import h_bond_energy, protection_factors, sasa_approx
+from diff_hdx import h_bond_energy, protection_factors, sasa_approx
 
 
 def main():
@@ -17,12 +17,12 @@ def main():
     hb_energies = h_bond_energy(coords, acceptors)
 
     # 4. Predict Protection Factors
-    ln_p = protection_factors(coords, hb_energies)
+    pf = protection_factors(coords, hb_energies)
 
     print(f"Coordinates:\n{coords}")
     print(f"Approximate SASA: {sasa}")
     print(f"H-bond Energies: {hb_energies}")
-    print(f"ln P: {ln_p}")
+    print(f"Protection Factors: {pf}")
 
     # 5. Gradient Descent (Refinement)
     def loss(x):
