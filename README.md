@@ -22,7 +22,7 @@
 
 Experience **diff-hdx** directly in your browser:
 
-- [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/elkins/diff-hdx/blob/main/examples/hdx_prediction_tutorial.ipynb) **HDX-MS Prediction & Kinetics** — Learn how to simulate intrinsic rates, protection factors, and deuterium uptake curves.
+- [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/elkins/diff-hdx/blob/main/examples/interactive_tutorials/hdx_prediction_tutorial.ipynb) **HDX-MS Prediction & Kinetics** — Learn how to simulate intrinsic rates, protection factors, and deuterium uptake curves.
 
 ---
 
