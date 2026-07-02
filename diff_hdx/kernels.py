@@ -65,6 +65,9 @@ def intrinsic_rates(
     """
     n = len(sequence)  # noqa: F841 -- kept for readability; not used in vectorised ops
 
+    if not sequence:
+        return jnp.zeros(0)
+
     # Encode sequence as integer indices (unknown residues → Ala)
     seq_idx = [_AA_IDX.get(aa, _ALA_IDX) for aa in sequence]
 
@@ -104,7 +107,15 @@ def intrinsic_rates(
     kb = kb_ref_t * 10.0 ** (left_corr[:, 2] + right_corr[:, 3])  # bl + br
     kw = kw_ref_t * 10.0 ** (left_corr[:, 2] + right_corr[:, 3])  # same as kb
 
-    return jnp.asarray(ka * h_plus + kb * oh_minus + kw)  # explicit Array, satisfies mypy
+    rates = ka * h_plus + kb * oh_minus + kw
+
+    # Proline has no amide proton, so its intrinsic rate is physically 0.0.
+    # Note: we use 0.0 here as the rate; downstream tools should handle this
+    # appropriately if a sentinel value or NaN is preferred instead.
+    pro_idx = _AA_IDX.get("P", -1)
+    pro_mask = jnp.where(jnp.array(seq_idx) == pro_idx, 0.0, 1.0)
+
+    return jnp.asarray(rates * pro_mask)  # explicit Array, satisfies mypy
 
 
 def sasa_approx(

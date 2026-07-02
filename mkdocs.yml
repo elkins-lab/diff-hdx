@@ -1,5 +1,5 @@
 site_name: diff-hdx
-site_url: https://elkins.github.io/diff-hdx/
+site_url: https://elkins-lab.github.io/diff-hdx/
 site_description: Differentiable HDX-MS prediction in JAX
 site_author: George Elkins
 

@@ -1,6 +1,6 @@
 # 🧪 diff-hdx: Differentiable HDX-MS Prediction in JAX
 
-[![Tests](https://github.com/elkins/diff-hdx/actions/workflows/test.yml/badge.svg)](https://github.com/elkins/diff-hdx/actions/workflows/test.yml)
+[![Tests](https://github.com/elkins-lab/diff-hdx/actions/workflows/test.yml/badge.svg)](https://github.com/elkins-lab/diff-hdx/actions/workflows/test.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![JAX](https://img.shields.io/badge/backend-JAX-9cf.svg)](https://github.com/google/jax)
 
@@ -22,7 +22,7 @@
 
 Experience **diff-hdx** directly in your browser:
 
-- [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/elkins/diff-hdx/blob/main/examples/interactive_tutorials/hdx_prediction_tutorial.ipynb) **HDX-MS Prediction & Kinetics** — Learn how to simulate intrinsic rates, protection factors, and deuterium uptake curves.
+- [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/elkins-lab/diff-hdx/blob/main/examples/interactive_tutorials/hdx_prediction_tutorial.ipynb) **HDX-MS Prediction & Kinetics** — Learn how to simulate intrinsic rates, protection factors, and deuterium uptake curves.
 
 ---
 
@@ -61,10 +61,10 @@ pip install diff-hdx
 
 diff-hdx is part of the **differentiable biophysics** ecosystem:
 
-- [diff-biophys](https://github.com/elkins/diff-biophys) — Core differentiable biophysics engine.
-- [diff-fret](https://github.com/elkins/diff-fret) — Differentiable FRET modeling.
-- [diff-epr](https://github.com/elkins/diff-epr) — Differentiable EPR/DEER simulation.
-- [synth-pdb](https://github.com/elkins/synth-pdb) — Synthetic structure generation.
+- [diff-biophys](https://github.com/elkins-lab/diff-biophys) — Core differentiable biophysics engine.
+- [diff-fret](https://github.com/elkins-lab/diff-fret) — Differentiable FRET modeling.
+- [diff-epr](https://github.com/elkins-lab/diff-epr) — Differentiable EPR/DEER simulation.
+- [synth-pdb](https://github.com/elkins-lab/synth-pdb) — Synthetic structure generation.
 
 ---
 
@@ -75,8 +75,8 @@ diff-hdx is part of the **differentiable biophysics** ecosystem:
   author  = {Elkins, George},
   title   = {diff-hdx: Differentiable HDX-MS prediction in JAX},
   year    = {2026},
-  url     = {https://github.com/elkins/diff-hdx},
-  version = {0.1.0}
+  url     = {https://github.com/elkins-lab/diff-hdx},
+  version = {0.1.2}
 }
 ```
 

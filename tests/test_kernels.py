@@ -155,7 +155,8 @@ def test_intrinsic_rates_jit_compatible() -> None:
     # Should compile and run without error
     rates = jit_rates("ACDEFGHIKLMNPQRSTVWY", ph=7.0, temperature=293.15)
     assert rates.shape == (20,)
-    assert jnp.all(rates > 0)
+    assert jnp.all(rates >= 0)
+    assert jnp.sum(rates == 0) == 1  # The Proline residue should be exactly 0
 
 
 def test_intrinsic_rates_temperature_dependence() -> None:
@@ -194,3 +195,74 @@ def test_h_bond_energy_far_acceptor() -> None:
     assert count_far[0] < 0.01, (
         f"H-bond count must be ~0 for acceptor far outside cutoff, got {count_far[0]:.6f}"
     )
+
+
+def test_intrinsic_rates_proline() -> None:
+    """
+    Verify that Proline (P) has an intrinsic rate of 0.0 since it lacks an amide proton.
+    """
+    rates = intrinsic_rates("APA", ph=7.0, temperature=293.15)
+    # The middle residue is Proline, should be exactly 0
+    assert rates[1] == 0.0
+    assert rates[0] > 0.0
+    assert rates[2] > 0.0
+
+
+def test_intrinsic_rates_empty_sequence() -> None:
+    """
+    Verify that an empty sequence correctly returns an empty array.
+    """
+    rates = intrinsic_rates("", ph=7.0, temperature=293.15)
+    assert rates.shape == (0,)
+
+
+def test_intrinsic_rates_ph_dependence() -> None:
+    """
+    Verify the V-shape of HDX rates across pH (minimal around pH 2.5 - 3.0).
+    """
+    rate_ph3 = intrinsic_rates("AAAA", ph=3.0, temperature=293.15)
+    rate_ph7 = intrinsic_rates("AAAA", ph=7.0, temperature=293.15)
+    rate_ph1 = intrinsic_rates("AAAA", ph=1.0, temperature=293.15)
+
+    # Rate at pH 3 should be a minimum compared to pH 1 (acid-catalyzed) and pH 7 (base-catalyzed)
+    assert jnp.all(rate_ph3 < rate_ph7)
+    assert jnp.all(rate_ph3 < rate_ph1)
+
+
+def test_protection_factors_beta_scaling() -> None:
+    """
+    Verify that beta_c and beta_asa correctly scale the H-bond and SASA burial terms.
+    """
+    coords = jnp.array([[0.0, 0.0, 0.0]])
+    h_bonds = jnp.array([2.0])
+
+    # None active (ln(PF) = 0 -> PF = 1.0)
+    pf_none = protection_factors(coords, h_bonds, beta_c=0.0, beta_asa=0.0)
+    assert jnp.allclose(pf_none, 1.0)
+
+    # Only H-bond active
+    pf_hb_only = protection_factors(coords, h_bonds, beta_c=1.0, beta_asa=0.0)
+    assert pf_hb_only[0] > 1.0
+
+    # Only SASA active - use two atoms to create some burial (SASA < 1.0)
+    coords_two = jnp.array([[0.0, 0.0, 0.0], [1.0, 0.0, 0.0]])
+    h_bonds_two = jnp.array([0.0, 0.0])
+    pf_sasa_only_two = protection_factors(coords_two, h_bonds_two, beta_c=0.0, beta_asa=1.0)
+    assert pf_sasa_only_two[0] > 1.0  # Partially buried, so 1-SASA > 0 => PF > 1
+
+
+def test_h_bond_energy_cutoff() -> None:
+    """
+    Verify that overriding the cutoff parameter successfully rejects acceptors
+    that would otherwise be included.
+    """
+    donors = jnp.array([[0.0, 0.0, 0.0]])
+    acceptors = jnp.array([[2.0, 0.0, 0.0]])  # At 2.0 A
+
+    # With default cutoff 3.5, it should be heavily counted (sigmoid(3) approx 0.95+)
+    count_default = h_bond_energy(donors, acceptors)
+    assert count_default[0] > 0.9
+
+    # With strict cutoff 1.0, it should be mostly rejected (sigmoid(-2) approx 0.11)
+    count_strict = h_bond_energy(donors, acceptors, cutoff=1.0)
+    assert count_strict[0] < 0.2
