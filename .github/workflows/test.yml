@@ -61,11 +61,12 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install "numpy==${{ matrix.numpy-version }}"
-                if [ "${{ matrix.jax-version }}" != "latest" ]; then
-                  pip install "jax==${{ matrix.jax-version }}" "jaxlib==${{ matrix.jax-version }}"
-                fi
-        pip install -e ".[dev]"
+        if [ "${{ matrix.jax-version }}" != "latest" ]; then
+          JAX_REQ="jax==${{ matrix.jax-version }} jaxlib==${{ matrix.jax-version }}"
+        else
+          JAX_REQ=""
+        fi
+        pip install -e ".[dev]" "numpy==${{ matrix.numpy-version }}" $JAX_REQ
 
       shell: bash
 
